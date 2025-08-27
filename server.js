@@ -7,12 +7,21 @@ const { v4: uuidv4 } = require('uuid');
 const dayjs = require('dayjs');
 const puppeteer = require('puppeteer');
 const db = require('./db');
+  const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const expressLayouts = require('express-ejs-layouts');
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(expressLayouts);
+app.set('layout', 'layout');
+
+  app.use(expressLayouts);
+  app.set('layout', 'layout');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

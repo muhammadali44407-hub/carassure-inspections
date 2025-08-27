@@ -1,0 +1,70 @@
+<%- include('partials/header', { pageTitle: 'Inspection Report' }) %>
+<div class="report-header card">
+  <div class="grid two">
+    <div>
+      <h1>Vehicle Inspection Report</h1>
+      <p class="muted">Inspection ID: <%= insp.id %> • <%= dayjs(insp.created_at).format('D MMM YYYY, h:mm A') %></p>
+      <p><strong>Customer:</strong> <%= insp.customer_name || '' %> (<%= insp.customer_email || '' %>)</p>
+      <p><strong>Inspector:</strong> <%= insp.inspector_name || '' %></p>
+    </div>
+    <div class="right">
+      <div class="score-circle"><%= insp.score ?? '--' %></div>
+      <p class="muted">Overall Score</p>
+    </div>
+  </div>
+  <div class="grid four compact">
+    <p><strong>Vehicle:</strong> <%= [insp.vehicle_year, insp.vehicle_make, insp.vehicle_model].filter(Boolean).join(' ') %></p>
+    <p><strong>Rego:</strong> <%= insp.rego || '-' %></p>
+    <p><strong>VIN:</strong> <%= insp.vin || '-' %></p>
+    <p><strong>Odometer:</strong> <%= insp.odometer || '-' %></p>
+  </div>
+  <div>
+    <p><strong>Summary:</strong> <%= insp.summary || '—' %></p>
+  </div>
+</div>
+
+<% Object.keys(bySection).forEach(section => { %>
+  <section class="card section-block">
+    <h2><%= section %></h2>
+    <table class="table condensed">
+      <thead>
+        <tr>
+          <th style="width:28%">Item</th>
+          <th style="width:12%">Rating</th>
+          <th style="width:40%">Notes</th>
+          <th style="width:20%">Photo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bySection[section].forEach(it => { %>
+          <tr>
+            <td><%= it.label %></td>
+            <td>
+              <% if (it.rating === 'Pass') { %>
+                <span class="badge pass">Pass</span>
+              <% } else if (it.rating === 'Attention') { %>
+                <span class="badge attention">Attention</span>
+              <% } else { %>
+                <span class="badge fail">Fail</span>
+              <% } %>
+            </td>
+            <td><%= it.notes || '' %></td>
+            <td>
+              <% if (it.photo_path) { %>
+                <img src="<%= it.photo_path %>" class="thumb" alt="photo"/>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+<% }) %>
+
+<div class="card">
+  <div class="actions">
+    <a class="btn" target="_blank" href="/inspections/<%= insp.id %>/report.pdf">Download PDF</a>
+    <a class="btn" href="/">Back to list</a>
+  </div>
+  <p class="muted small">Disclaimer: This report is based on a visual, non-invasive inspection and road test at the time and location stated. No warranty is provided or implied.</p>
+</div>

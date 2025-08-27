@@ -1,0 +1,29 @@
+<%- include('partials/header', { pageTitle: 'Inspections' }) %>
+<h1>Inspections</h1>
+<p><a class="btn" href="/inspections/new">+ New Inspection</a></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Created</th>
+      <th>Customer</th>
+      <th>Vehicle</th>
+      <th>Rego</th>
+      <th>Status</th>
+      <th>Score</th>
+      <th>Report</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% inspections.forEach(i => { %>
+      <tr>
+        <td><%= dayjs(i.created_at).format('YYYY-MM-DD HH:mm') %></td>
+        <td><%= i.customer_name || '' %></td>
+        <td><%= [i.vehicle_year, i.vehicle_make, i.vehicle_model].filter(Boolean).join(' ') %></td>
+        <td><%= i.rego || '' %></td>
+        <td><%= i.status %></td>
+        <td><%= i.score ?? '' %></td>
+        <td><a href="/inspections/<%= i.id %>/report" class="link">View</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

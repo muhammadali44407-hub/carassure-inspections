@@ -1,0 +1,86 @@
+<%- include('partials/header', { pageTitle: 'New Inspection' }) %>
+<h1>New Inspection</h1>
+<form action="/inspections" method="post" enctype="multipart/form-data" class="card">
+  <fieldset>
+    <legend>Customer & Vehicle</legend>
+    <div class="grid two">
+      <label>Customer Name
+        <input name="customer_name" required/>
+      </label>
+      <label>Customer Email
+        <input name="customer_email" type="email"/>
+      </label>
+      <label>Customer Phone
+        <input name="customer_phone"/>
+      </label>
+      <label>Location
+        <input name="location"/>
+      </label>
+    </div>
+    <div class="grid four">
+      <label>Make
+        <input name="vehicle_make" required/>
+      </label>
+      <label>Model
+        <input name="vehicle_model" required/>
+      </label>
+      <label>Year
+        <input name="vehicle_year" required/>
+      </label>
+      <label>Rego
+        <input name="rego"/>
+      </label>
+    </div>
+    <div class="grid three">
+      <label>VIN
+        <input name="vin"/>
+      </label>
+      <label>Odometer (km)
+        <input name="odometer"/>
+      </label>
+      <label>Inspector Name
+        <input name="inspector_name" required/>
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Inspection Items</legend>
+    <p class="muted">Rate each item and add notes & a photo. Ratings: <span class="badge pass">Pass</span> <span class="badge attention">Attention</span> <span class="badge fail">Fail</span></p>
+    <% items.forEach((it, idx) => { %>
+      <div class="item-row">
+        <div class="item-meta">
+          <strong><%= it.section %></strong> — <%= it.label %>
+        </div>
+        <div class="item-inputs">
+          <label class="radio"><input type="radio" name="rating_<%= idx %>" value="Pass" checked/> Pass</label>
+          <label class="radio"><input type="radio" name="rating_<%= idx %>" value="Attention"/> Attention</label>
+          <label class="radio"><input type="radio" name="rating_<%= idx %>" value="Fail"/> Fail</label>
+          <label class="stretch">Notes
+            <input name="notes_<%= idx %>" placeholder="Observations, measurements, etc."/>
+          </label>
+          <label>Photo
+            <input type="file" accept="image/*" name="photo_<%= idx %>"/>
+          </label>
+        </div>
+      </div>
+    <% }) %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Summary</legend>
+    <div class="grid two">
+      <label>Overall Score (0–100)
+        <input name="score" type="number" min="0" max="100" placeholder="e.g., 86"/>
+      </label>
+      <label>Summary / Recommendations
+        <input name="summary" placeholder="Overall condition, repairs needed, price guidance, etc."/>
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="actions">
+    <button class="btn primary" type="submit">Save & View Report</button>
+    <a class="btn" href="/">Cancel</a>
+  </div>
+</form>

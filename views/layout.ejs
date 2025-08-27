@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title><%= title || 'CarAssure Inspections' %></title>
+  <link rel="stylesheet" href="/public/css/styles.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">CarAssure</div>
+      <nav>
+        <a href="/">Inspections</a>
+        <a href="/inspections/new">New Inspection</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <%- body %>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      © <%= new Date().getFullYear() %> CarAssure — Pre‑Purchase Vehicle Inspections
+    </div>
+  </footer>
+</body>
+</html>
